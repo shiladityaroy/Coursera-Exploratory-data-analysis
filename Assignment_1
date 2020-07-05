@@ -1,62 +1,75 @@
-########Read data########
-
-data<- read.delim("household_power_consumption.txt")
-
-#######date format########
-
-data$Date<-as.Date(Data$Date,"%d/%m/%Y")
-
-head(data)
-
-
-data<-subset(Data,Date>="2007-02-01"&Data<="2007-02-02")
-####Convert data########
-data$Global_active_power<-as.numeric(Data$Global_active_power)
-
-######## Plot 1 ###########
-hist(data$Global_active_power,xlab="Global_active_power",col="red",main="Global Active Power")
-legend("topright",legend = "Plot1")
-
-png(file="Plot1.png")
-hist(data$Global_active.Power,col="red",xlab = "GlobalActivePower(Kilowatts)",main  ="Global Active Power")
+ #######################Plot 1###############
+ 
+setwd("E:/Coursera/course_4/week_1")
+data_full <- read.csv("household_power_consumption.txt", header=T, sep=';', na.strings="?", 
+                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+data_s1 <- subset(data_full, Date %in% c("1/2/2007","2/2/2007"))
+data_s1$Date <- as.Date(data_s1$Date, format="%d/%m/%Y")
+hist(data_s1$Global_active_power, main="Global Active Power", 
+     xlab="Global Active Power (kilowatts)", ylab="Frequency", col="Red")
+dev.copy(png, file="plot_1.png", height=480, width=480)
 dev.off()
 
+#################Plot 2####################
+setwd("E:/Coursera/course_4/week_1")
+data_full <- read.csv("household_power_consumption.txt", header=T, sep=';', na.strings="?", 
+                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+data_s1 <- subset(data_full, Date %in% c("1/2/2007","2/2/2007"))
+data_s1$Date <- as.Date(data_s1$Date, format="%d/%m/%Y")
+datetime <- paste(as.Date(data_s1$Date), data_s1$Time)
+data_s1$Datetime <- as.POSIXct(datetime)
+with(data_s1, {
+  plot(Global_active_power~Datetime, type="l",
+       ylab="Global Active Power (kilowatts)", xlab="")
+})
+dev.copy(png, file="plot2.png", height=480, width=480)
+dev.off()
 
-############# Plot 2 ##############
-summary(data)
-plot(data$DateTime,data$Global_active.Power,ylab="Global Active Power(KiloWatts)",type = "l")
+###################Plot 3#####################
 
-png(file="Plot2.png")
-plot(data$DateTime,data$Global_active.Power,ylab="Global Active Power(KiloWatts)",type = "l")
-dev.off() 
+  
+setwd("E:/Coursera/course_4/week_1")
+data_full <- read.csv("household_power_consumption.txt", header=T, sep=';', na.strings="?", 
+                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+data_s1 <- subset(data_full, Date %in% c("1/2/2007","2/2/2007"))
+data_s1$Date <- as.Date(data_s1$Date, format="%d/%m/%Y")
+datetime <- paste(as.Date(data_s1$Date), data_s1$Time)
+data_s1$Datetime <- as.POSIXct(datetime)
+with(data_s1, {
+  plot(Sub_metering_1~Datetime, type="l",
+       ylab="Global Active Power (kilowatts)", xlab="")
+  lines(Sub_metering_2~Datetime,col='Red')
+  lines(Sub_metering_3~Datetime,col='Blue')
+})
+legend("topright", col=c("black", "red", "blue"), lty=1, lwd=2, 
+       legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
-############## Plot 3 ###########
-lines(data$DateTime,z,col='red')
-legend("topright",pch='-',col=c("black","blue","Red"),legend=c("Sub_Metering1","Sub_Metering2","Sub_Metering3"))
+dev.copy(png, file="plot3.png", height=480, width=480)
 
-png(file="Plot3.png")
-plot(data$DateTime,x,xlab="datetime",ylab = "Energy Sub_Metering",type = 'n')
-lines(data$DateTime, x)
-lines(data$DateTime, y,col='blue')
-lines(data$DateTime,z,col='red')
-legend("topright",pch='-',col=c("black","blue","Red"),legend=c("Sub_Metering1","Sub_Metering2","Sub_Metering3"))
-dev.off() 
+dev.off()
 
-########### Plot 4 #############
-lines(data$DateTime, y,col='blue')
-lines(data$DateTime,z,col='red')
-legend("topright",pch='-',col=c("black","blue","Red"),legend=c("Sub_Metering1","Sub_Metering2","Sub_Metering3"))
-plot(data$DateTime, data$Global_reactive.Power,xlab="Datetime",ylab = "Global Reactive Power",type='l') 
-plot(data$DateTime, data$Global_reactive.Power,xlab="Datetime",ylab = "Global Reactive Power",type='l')
-
-png(file="Plot4.png")
-par(mfrow=c(2,2))
-plot(data$DateTime,data$Global_active.Power,xlab="Datetime",ylab="Global Active Power(KiloWatts)",type = "l")
-plot(data$DateTime,data$Voltage, xlab="datetime",ylab="Voltage",type='l')
-plot(data$DateTime,x,xlab="datetime",ylab = "Energy Sub_Metering",type = 'n')
-lines(data$DateTime, x)
-lines(data$DateTime, y,col='blue')
-lines(data$DateTime,z,col='red')
-legend("topright",pch='-',col=c("black","blue","Red"),legend=c("Sub_Metering1","Sub_Metering2","Sub_Metering3"))
-plot(data$DateTime, data$Global_reactive.Power,xlab="Datetime",ylab = "Global Reactive Power",type='l')
-dev.off() 
+##########################Plot 4##############################
+setwd("E:/Coursera/course_4/week_1")
+data_full <- read.csv("household_power_consumption.txt", header=T, sep=';', na.strings="?", 
+                      nrows=2075259, check.names=F, stringsAsFactors=F, comment.char="", quote='\"')
+data_s1 <- subset(data_full, Date %in% c("1/2/2007","2/2/2007"))
+data_s1$Date <- as.Date(data_s1$Date, format="%d/%m/%Y")
+datetime <- paste(as.Date(data_s1$Date), data_s1$Time)
+data_s1$Datetime <- as.POSIXct(datetime)
+par(mfrow=c(2,2), mar=c(4,4,2,1), oma=c(0,0,2,0))
+with(data_s1, {
+  plot(Global_active_power~Datetime, type="l", 
+       ylab="Global Active Power (kilowatts)", xlab="")
+  plot(Voltage~Datetime, type="l", 
+       ylab="Voltage (volt)", xlab="")
+  plot(Sub_metering_1~Datetime, type="l", 
+       ylab="Global Active Power (kilowatts)", xlab="")
+  lines(Sub_metering_2~Datetime,col='Red')
+  lines(Sub_metering_3~Datetime,col='Blue')
+  legend("topright", col=c("black", "red", "blue"), lty=1, lwd=2, bty="n",
+         legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+  plot(Global_reactive_power~Datetime, type="l", 
+       ylab="Global Rective Power (kilowatts)",xlab="")
+})
+dev.copy(png, file="plot4.png", height=480, width=480)
+dev.off()
